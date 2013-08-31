@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:panel="http://schemas.android.com/apk/res/com.huige.mines"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wall" >
+
+    <TableLayout
+        android:id="@+id/mainfiled"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/downbar"
+        android:layout_marginTop="40dp"
+        android:gravity="center" >
+    </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/downbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/clock"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="0"
+            android:textColor="@android:color/black" >
+        </TextView>
+
+        <Button
+            android:id="@+id/open"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:maxWidth="80dp"
+            android:layout_marginBottom="3dp"
+            android:onClick="openButtonClick"
+            android:text="@string/start" >
+        </Button>
+
+        <TextView
+            android:id="@+id/mines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/mine"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@android:color/black" >
+        </TextView>
+    </LinearLayout>
+
+    <com.huige.mines.Panel
+        android:id="@+id/topPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="4dip"
+        panel:closedHandle="@drawable/top_switcher_collapsed_background"
+        panel:content="@+id/panelContent"
+        panel:handle="@+id/panelHandle"
+        panel:linearFlying="true"
+        panel:openedHandle="@drawable/top_switcher_expanded_background"
+        panel:position="top" >
+
+        <Button
+            android:id="@+id/panelHandle"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp" />
+
+        <LinearLayout
+            android:id="@+id/panelContent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <ToggleButton
+                android:id="@+id/SoundToggleButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selector"
+                android:textOff="@string/sound_close"
+                android:textOn="@string/sound_open" />
+
+            <RadioGroup
+                android:id="@+id/LevelRadioGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selector"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/primaryRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="@string/primary"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/middleRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="@string/middle"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/highRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="@string/high"
+                    android:textColor="@android:color/black" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/HelpButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selector"
+                android:onClick="onHelpButtonClick"
+                android:text="@string/help" />
+
+            <Button
+                android:id="@+id/HistoryButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selector"
+                android:onClick="onHistoryButtonClick"
+                android:text="@string/charts" />
+
+            <Button
+                android:id="@+id/ExitButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_red_selector"
+                android:onClick="onExitButtonClick"
+                android:text="@string/exit" />
+        </LinearLayout>
+    </com.huige.mines.Panel>
+
+</RelativeLayout>
