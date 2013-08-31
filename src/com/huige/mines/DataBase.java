@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/*
+ * data base
+ */
 public class DataBase extends SQLiteOpenHelper {
 
 	public static final int DATABASE_VERSION = 1;
