@@ -1,8 +1,11 @@
-package com.huige.mines;
+package com.zhengwenhui.mines;
 
 import java.util.Calendar;
 import java.util.Random;
 
+import net.youmi.android.AdManager;
+import net.youmi.android.offers.OffersManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -67,6 +70,9 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_layout);
 
+		// 初始化应用的发布ID和密钥，以及设置测试模式
+		AdManager.getInstance(this).init("a66c2e429a083b5f","52e8f17b63bd3637", false);
+		OffersManager.getInstance(this).onAppLaunch();
 		set = new Set(this);
 		mSoundToggleButton = (ToggleButton)findViewById(R.id.SoundToggleButton);
 		mSoundToggleButton.setChecked(set.mOpenSound);
@@ -338,7 +344,6 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		if(resid>=0){
 			((ImageButton)mViews[line][row]).setImageResource(resid);
 		}
-
 	}
 
 	private void openMulti(int line, int row){
@@ -625,7 +630,6 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		}
 		message +="\n用时"+mSeconds+"秒";
 		winDialog(message);
-
 		database.insert(Calendar.getInstance().getTime().toLocaleString(), mSeconds, set.getDifficulty());
 	}
 
@@ -696,7 +700,14 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	public void finish() {
 		// TODO Auto-generated method stub
 		database.close();
+		OffersManager.getInstance(this).onAppExit();
 		super.finish();
+	}
+
+	public void onMoreButtonClick(View view){
+		/*Intent intent = new Intent(this, MoreActivity.class);
+		startActivity(intent);*/
+		OffersManager.getInstance(this).showOffersWall();
 	}
 
 	public void onHistoryButtonClick(View view){
@@ -709,6 +720,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		startActivity(intent);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -718,6 +730,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		}
 		else{
 			super.onBackPressed();
+			OffersManager.getInstance(this).onAppExit(); 
 		}
 	}
 }

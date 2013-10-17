@@ -1,4 +1,4 @@
-package com.huige.mines;
+package com.zhengwenhui.mines;
 
 import android.app.Activity;
 import android.os.Bundle;

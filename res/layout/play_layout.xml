@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:panel="http://schemas.android.com/apk/res/com.huige.mines"
+    xmlns:panel="http://schemas.android.com/apk/res/com.zhengwenhui.mines"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/wall" >
@@ -57,7 +57,7 @@
         </TextView>
     </LinearLayout>
 
-    <com.huige.mines.Panel
+    <com.zhengwenhui.mines.Panel
         android:id="@+id/topPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -155,6 +155,17 @@
                 android:background="@drawable/button_selector"
                 android:onClick="onHistoryButtonClick"
                 android:text="@string/charts" />
+            
+            <Button
+                android:id="@+id/MoreButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selector"
+                android:onClick="onMoreButtonClick"
+                android:text="@string/moregame" />
 
             <Button
                 android:id="@+id/ExitButton"
@@ -165,6 +176,6 @@
                 android:onClick="onExitButtonClick"
                 android:text="@string/exit" />
         </LinearLayout>
-    </com.huige.mines.Panel>
+    </com.zhengwenhui.mines.Panel>
 
 </RelativeLayout>

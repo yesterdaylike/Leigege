@@ -1,4 +1,4 @@
-package com.huige.mines;
+package com.zhengwenhui.mines;
 
 import android.content.Context;
 import android.content.SharedPreferences;
