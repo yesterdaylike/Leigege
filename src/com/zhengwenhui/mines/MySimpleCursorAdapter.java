@@ -11,6 +11,7 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter {
 
 	String second;
 
+	@SuppressWarnings("deprecation")
 	public MySimpleCursorAdapter(Context context, int layout, Cursor c,
 			String[] from, int[] to) {
 		super(context, layout, c, from, to);

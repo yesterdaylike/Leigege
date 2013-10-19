@@ -4,16 +4,16 @@
     android:versionCode="5"
     android:versionName="2.1" >
 
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 以下两个为新增必选权限！ -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -41,7 +41,6 @@
             android:name=".HelpActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-
         <activity
             android:name="net.youmi.android.AdBrowser"
             android:configChanges="keyboard|keyboardHidden|orientation"
@@ -62,15 +61,15 @@
         </receiver>
 
         <activity
-            android:name="net.youmi.android.SmartBannerActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:theme="@style/Transparent" >
+            android:name=".youmi.DiySourceWallActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation"
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
-
-        <service
-            android:name="net.youmi.android.SmartBannerService"
-            android:exported="false" >
-        </service>
+        <activity
+            android:name=".youmi.DiyAppDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation"
+            android:theme="@android:style/Theme.Holo.Light" >
+        </activity>
     </application>
 
 </manifest>

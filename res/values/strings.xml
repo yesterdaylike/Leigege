@@ -19,7 +19,7 @@
     <string name="ok">确定</string>
     <string name="lost">失败了！</string>
     <string name="second">秒</string>
-    <string name="moregame">更多游戏...</string>
+    <string name="moregame">更多游戏</string>
     <string name="help_textview">
 \n规则：  打开方块显示的数字，表示该方块周围的8个方块中有几个雷，如果挖开的是地雷，则输掉游戏。
 

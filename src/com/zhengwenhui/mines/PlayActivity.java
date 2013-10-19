@@ -1,9 +1,14 @@
 package com.zhengwenhui.mines;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
+import com.zhengwenhui.mines.youmi.DiySourceWallActivity;
+
 import net.youmi.android.AdManager;
+import net.youmi.android.diy.AdObject;
+import net.youmi.android.diy.DiyManager;
 import net.youmi.android.offers.OffersManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,6 +32,7 @@ import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class PlayActivity extends Activity implements OnClickListener,OnLongClickListener{
@@ -53,6 +59,8 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 
 	private Set set;
 	private DataBase database;
+	
+	private List<AdObject> adList;
 
 	private Handler handler = new Handler();
 	private Runnable runnable = new Runnable() {
@@ -71,8 +79,9 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		setContentView(R.layout.play_layout);
 
 		// 初始化应用的发布ID和密钥，以及设置测试模式
-		AdManager.getInstance(this).init("a66c2e429a083b5f","52e8f17b63bd3637", false);
-		OffersManager.getInstance(this).onAppLaunch();
+		AdManager.getInstance(this).init("fcf1221ea7a62831","7c7cfe58880fc8ea", true);
+		// 预加载自定义数据列表
+        DiyManager.initAdObjects(this);
 		set = new Set(this);
 		mSoundToggleButton = (ToggleButton)findViewById(R.id.SoundToggleButton);
 		mSoundToggleButton.setChecked(set.mOpenSound);
@@ -181,6 +190,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	 * 点击开始按钮，开始游戏
 	 * @param view
 	 */
+	@SuppressWarnings("deprecation")
 	public void openButtonClick(View view){
 		set.playSoundPool(1);
 		mGameing = true;
@@ -616,6 +626,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	}
 
 	//成功
+	@SuppressWarnings("deprecation")
 	private void win(){
 		//int value;
 		String message = "成功了！";
@@ -661,6 +672,15 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				dialog.cancel();
 			}
 		});
+		Button moreButton = (Button) dialog.findViewById(R.id.more);
+		moreButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				set.playSoundPool(1);
+				onMoreButtonClick(null);
+				dialog.cancel();
+			}
+		});
 	}
 
 	/**
@@ -690,6 +710,17 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				dialog.cancel();
 			}
 		});
+		
+		Button moreButton = (Button) dialog.findViewById(R.id.more);
+		moreButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				set.playSoundPool(1);
+				onMoreButtonClick(null);
+				dialog.cancel();
+			}
+		});
+		
 	}
 
 	public void onExitButtonClick(View view){
@@ -704,10 +735,20 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		super.finish();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void onMoreButtonClick(View view){
-		/*Intent intent = new Intent(this, MoreActivity.class);
-		startActivity(intent);*/
-		OffersManager.getInstance(this).showOffersWall();
+		// 获取自定义广告列表
+		//DiyManager.showRecommendWall(this);
+		
+        adList = DiyManager.getAdList(this);
+        if(adList!=null){
+            Intent i = new Intent();
+            i.setClass(this, DiySourceWallActivity.class);
+            startActivity(i);
+        }else{
+            Toast.makeText(this, "加载数据失败，请尝试再次加载。", Toast.LENGTH_LONG).show();
+            DiyManager.initAdObjects(this);
+        }
 	}
 
 	public void onHistoryButtonClick(View view){

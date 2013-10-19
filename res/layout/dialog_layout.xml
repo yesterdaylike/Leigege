@@ -29,18 +29,34 @@
         android:paddingBottom="10sp"
         android:paddingTop="10sp"
         android:text="@string/lost"
-        
         android:textColor="#f000"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/ok"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/button_selector"
-        android:gravity="center"
-        android:onClick="onOkButtonClick"
-        android:text="@string/ok" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/ok"
+            style="@style/DarkShadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/more"
+            style="@style/DarkShadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_red_selector"
+            android:gravity="center"
+            android:text="@string/moregame" />
+    </LinearLayout>
 
 </LinearLayout>

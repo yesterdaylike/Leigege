@@ -73,6 +73,7 @@ public class Panel extends LinearLayout {
 	private PanelOnGestureListener mGestureListener;
 	private boolean mBringToFront;
 
+	@SuppressWarnings("deprecation")
 	public Panel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Panel);
@@ -188,6 +189,7 @@ public class Panel extends LinearLayout {
 		return mContent.getVisibility() == VISIBLE;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onFinishInflate() {
 		super.onFinishInflate();
@@ -478,6 +480,7 @@ public class Panel extends LinearLayout {
 		}
 	};
 
+	@SuppressWarnings("deprecation")
 	private void postProcess() {
 		if (mIsShrinking && mClosedHandle != null) {
 			mHandle.setBackgroundDrawable(mClosedHandle);
