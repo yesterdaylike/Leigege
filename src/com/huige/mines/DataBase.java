@@ -1,4 +1,4 @@
-package com.zhengwenhui.mines;
+package com.huige.mines;
 
 import android.content.ContentValues;
 import android.content.Context;

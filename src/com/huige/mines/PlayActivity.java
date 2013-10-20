@@ -1,10 +1,10 @@
-package com.zhengwenhui.mines;
+package com.huige.mines;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import com.zhengwenhui.mines.youmi.DiySourceWallActivity;
+import com.huige.mines.youmi.DiySourceWallActivity;
 
 import net.youmi.android.AdManager;
 import net.youmi.android.diy.AdObject;
@@ -79,7 +79,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		setContentView(R.layout.play_layout);
 
 		// 初始化应用的发布ID和密钥，以及设置测试模式
-		AdManager.getInstance(this).init("fcf1221ea7a62831","7c7cfe58880fc8ea", true);
+		AdManager.getInstance(this).init("d72e9f61b58f5ee5","fb9dfc2456866caf", false);
 		// 预加载自定义数据列表
         DiyManager.initAdObjects(this);
 		set = new Set(this);

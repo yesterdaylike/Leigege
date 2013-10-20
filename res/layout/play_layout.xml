@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:panel="http://schemas.android.com/apk/res/com.zhengwenhui.mines"
+    xmlns:panel="http://schemas.android.com/apk/res/com.huige.mines"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/wall" >
@@ -59,7 +59,7 @@
         </TextView>
     </LinearLayout>
 
-    <com.zhengwenhui.mines.Panel
+    <com.huige.mines.Panel
         android:id="@+id/topPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -178,6 +178,6 @@
                 android:onClick="onExitButtonClick"
                 android:text="@string/exit" />
         </LinearLayout>
-    </com.zhengwenhui.mines.Panel>
+    </com.huige.mines.Panel>
 
 </RelativeLayout>
