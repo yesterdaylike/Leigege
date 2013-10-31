@@ -55,11 +55,12 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 
 	private ToggleButton mSoundToggleButton;  //音效开关
 	private RadioGroup mLevelRadioGroup;	  //设置难度级别 
+	private RadioGroup mSkinGroup;	          //设置皮肤
 	private Panel mTopPanel;
 
 	private Set set;
 	private DataBase database;
-	
+
 	private List<AdObject> adList;
 
 	private Handler handler = new Handler();
@@ -81,7 +82,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		// 初始化应用的发布ID和密钥，以及设置测试模式
 		AdManager.getInstance(this).init("d72e9f61b58f5ee5","fb9dfc2456866caf", false);
 		// 预加载自定义数据列表
-        DiyManager.initAdObjects(this);
+		DiyManager.initAdObjects(this);
 		set = new Set(this);
 		mSoundToggleButton = (ToggleButton)findViewById(R.id.SoundToggleButton);
 		mSoundToggleButton.setChecked(set.mOpenSound);
@@ -93,7 +94,21 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				set.setOpenSound(isChecked);
 			}
 		});
+		initLevel();
+		initSkin();
+		
+		mTopPanel = (Panel)findViewById(R.id.topPanel);
 
+		mTableLayout = (TableLayout)findViewById(R.id.mainfiled);
+		mTimerTextView = (TextView)findViewById(R.id.timer);
+		mMinesTextView = (TextView)findViewById(R.id.mines); 
+		openButtonClick(null);
+		handler.postDelayed(runnable, 1000);
+
+		database = new DataBase(this);
+	}
+
+	private void initLevel(){
 		mLevelRadioGroup = (RadioGroup)findViewById(R.id.LevelRadioGroup);
 
 		int id = R.id.primaryRadioButton;
@@ -133,16 +148,43 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				openButtonClick(null);
 			}
 		});
+	}
+	
+	private void initSkin(){
+		mSkinGroup = (RadioGroup)findViewById(R.id.SkinGroup);
 
-		mTopPanel = (Panel)findViewById(R.id.topPanel);
+		int id = R.id.classicSkinButton;
+		switch (set.mSkin) {
+		case 0:
+			id = R.id.classicSkinButton;
+			break;
+		case 1:
+			id = R.id.timeSkinButton;
+			break;
+		default:
+			break;
+		}
+		mSkinGroup.check(id);
+		mSkinGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
-		mTableLayout = (TableLayout)findViewById(R.id.mainfiled);
-		mTimerTextView = (TextView)findViewById(R.id.timer);
-		mMinesTextView = (TextView)findViewById(R.id.mines); 
-		openButtonClick(null);
-		handler.postDelayed(runnable, 1000);
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				// TODO Auto-generated method stub
+				int skin = 0;
+				switch (checkedId) {
+				case R.id.classicSkinButton:
+					skin = 0;
+					break;
+				case R.id.timeSkinButton:
+					skin = 1;
+					break;
+				default:
+					break;
+				}
+				set.setSkin(skin);
+				openButtonClick(null);
+			}
+		});
 
-		database = new DataBase(this);
 	}
 
 	/**
@@ -710,7 +752,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				dialog.cancel();
 			}
 		});
-		
+
 		Button moreButton = (Button) dialog.findViewById(R.id.more);
 		moreButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -720,7 +762,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				dialog.cancel();
 			}
 		});
-		
+
 	}
 
 	public void onExitButtonClick(View view){
@@ -739,16 +781,16 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	public void onMoreButtonClick(View view){
 		// 获取自定义广告列表
 		//DiyManager.showRecommendWall(this);
-		
-        adList = DiyManager.getAdList(this);
-        if(adList!=null){
-            Intent i = new Intent();
-            i.setClass(this, DiySourceWallActivity.class);
-            startActivity(i);
-        }else{
-            Toast.makeText(this, "加载数据失败，请尝试再次加载。", Toast.LENGTH_LONG).show();
-            DiyManager.initAdObjects(this);
-        }
+
+		adList = DiyManager.getAdList(this);
+		if(adList!=null){
+			Intent i = new Intent();
+			i.setClass(this, DiySourceWallActivity.class);
+			startActivity(i);
+		}else{
+			Toast.makeText(this, "加载数据失败，请尝试再次加载。", Toast.LENGTH_LONG).show();
+			DiyManager.initAdObjects(this);
+		}
 	}
 
 	public void onHistoryButtonClick(View view){

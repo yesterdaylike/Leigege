@@ -84,6 +84,37 @@
             android:background="@android:color/white"
             android:orientation="vertical" >
 
+            <RadioGroup
+                android:id="@+id/SkinGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selector"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/classicSkinButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="@string/classic_skin"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/timeSkinButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="@string/time_skin"
+                    android:textColor="@android:color/black" />
+            </RadioGroup>
+
             <ToggleButton
                 android:id="@+id/SoundToggleButton"
                 android:layout_width="fill_parent"

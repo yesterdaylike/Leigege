@@ -14,6 +14,10 @@ public class Set{
 	static final String PRIMARY = "PRIMARY";
 	static final String MIDDLE = "MIDDLE";
 	static final String HIGH = "HIGH";
+	
+	static final String SKIN = "SKIN";
+	static final String CLASSIC_SKIN = "CLASSIC_SKIN";
+	static final String TIME_SKIN = "TIME_SKIN";
 
 	/*	private CheckBox openSound;
 	private RadioGroup difficulty;*/
@@ -24,6 +28,7 @@ public class Set{
 	private int mLongclickSound; 
 
 	public int mDifficulty;
+	public int mSkin;
 	
 	private Context mContext;
 
@@ -43,6 +48,7 @@ public class Set{
 		mContext = context;
 		getOpenSound();
 		getDifficulty();
+		getSkin();
 		//指定声音池的最大音频流数目为10，声音品质为5  
 		mSoundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);  
 		//载入音频流，返回在池中的id  
@@ -100,12 +106,25 @@ public class Set{
 		mDifficulty = settings.getInt(DIFFICULTY, 0);
 		return mDifficulty;
 	}
-
+	
 	public void setDifficulty(int difficulty){
 		Editor editor  = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
 		editor.putInt(DIFFICULTY, difficulty);
 		editor.commit();
 		mDifficulty = difficulty;
+	}
+
+	public int getSkin(){
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+		mSkin = settings.getInt(SKIN, 0);
+		return mSkin;
+	}
+	
+	public void setSkin(int skin){
+		Editor editor  = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
+		editor.putInt(SKIN, skin);
+		editor.commit();
+		mDifficulty = skin;
 	}
 
 	public void playSoundPool(int type){

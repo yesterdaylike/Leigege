@@ -20,8 +20,9 @@
     <string name="lost">失败了！</string>
     <string name="second">秒</string>
     <string name="moregame">更多游戏</string>
-    <string name="help_textview">
-\n规则：  打开方块显示的数字，表示该方块周围的8个方块中有几个雷，如果挖开的是地雷，则输掉游戏。
+    <string name="classic_skin">经典皮肤</string>
+    <string name="time_skin">新皮肤</string>
+    <string name="help_textview">\n规则：  打开方块显示的数字，表示该方块周围的8个方块中有几个雷，如果挖开的是地雷，则输掉游戏。
 
 \n操作：
 	\n-----------------------------
@@ -34,5 +35,4 @@
 \n注：打开周围*：该打开的方块上显示有数字，为a
 	1.周围标记为地雷的方块个数等于a，则打开周围未打开的方块。
 	2.周围状态为未打开或标记的方块的个数为a，则标记周围未打开的方块。	</string>
-
 </resources>
