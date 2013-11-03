@@ -12,8 +12,10 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
+        android:divider="@android:color/background_light"
+        android:dividerHeight="1dp"
         android:layout_weight="1"
-        android:background="@drawable/mine_normal" >
+        android:background="@drawable/mine_normal2" >
     </ListView>
 
     <Button

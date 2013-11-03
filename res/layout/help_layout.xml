@@ -5,7 +5,7 @@
     android:background="@drawable/wall"
     android:orientation="vertical" >
 
-    <TextView
+    <ImageView
         android:id="@+id/helpTextView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -13,8 +13,8 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
         android:layout_weight="1"
-        android:background="@drawable/mine_normal"
-        android:text="@string/help_textview" />
+        android:src="@drawable/help_drawable"
+        android:background="@drawable/mine_normal2" />
 
     <Button
         android:id="@+id/ReturnButton"

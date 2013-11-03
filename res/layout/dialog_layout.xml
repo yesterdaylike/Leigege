@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:minWidth="320dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/mine_normal"
+    android:background="@drawable/mine_normal2"
     android:orientation="vertical" >
 
     <TextView
@@ -17,7 +18,7 @@
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="1sp"
+        android:layout_height="1dp"
         android:background="#ff00ff00" />
 
     <TextView
@@ -31,6 +32,13 @@
         android:text="@string/lost"
         android:textColor="#f000"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/ad_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

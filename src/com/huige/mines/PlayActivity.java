@@ -4,9 +4,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import com.huige.mines.youmi.DiySourceWallActivity;
-
 import net.youmi.android.AdManager;
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
 import net.youmi.android.diy.AdObject;
 import net.youmi.android.diy.DiyManager;
 import net.youmi.android.offers.OffersManager;
@@ -28,14 +28,16 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class PlayActivity extends Activity implements OnClickListener,OnLongClickListener{
+	private RelativeLayout mPlayLayout;
 	private TableLayout mTableLayout;
 	private ImageButton[][] mViews;
 	private byte [][] mField;		     	  //格子周围的地雷的数目（-1 表示本身为地雷）
@@ -94,9 +96,10 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				set.setOpenSound(isChecked);
 			}
 		});
+		mPlayLayout = (RelativeLayout)findViewById(R.id.play_layout);
 		initLevel();
 		initSkin();
-		
+
 		mTopPanel = (Panel)findViewById(R.id.topPanel);
 
 		mTableLayout = (TableLayout)findViewById(R.id.mainfiled);
@@ -106,6 +109,14 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		handler.postDelayed(runnable, 1000);
 
 		database = new DataBase(this);
+		
+		/*//实例化广告条
+	    AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+	    //获取要嵌入广告条的布局
+	    LinearLayout adLayout=(LinearLayout)findViewById(R.id.ad_layout);
+	    //将广告条加入到布局中
+	    adLayout.addView(adView);*/
+		
 	}
 
 	private void initLevel(){
@@ -149,7 +160,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 			}
 		});
 	}
-	
+
 	private void initSkin(){
 		mSkinGroup = (RadioGroup)findViewById(R.id.SkinGroup);
 
@@ -157,9 +168,11 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		switch (set.mSkin) {
 		case 0:
 			id = R.id.classicSkinButton;
+			mPlayLayout.setBackgroundResource(R.drawable.wall);
 			break;
 		case 1:
 			id = R.id.timeSkinButton;
+			mPlayLayout.setBackgroundResource(R.drawable.wall_paper);
 			break;
 		default:
 			break;
@@ -173,9 +186,11 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 				switch (checkedId) {
 				case R.id.classicSkinButton:
 					skin = 0;
+					mPlayLayout.setBackgroundResource(R.drawable.wall);
 					break;
 				case R.id.timeSkinButton:
 					skin = 1;
+					mPlayLayout.setBackgroundResource(R.drawable.wall_paper);
 					break;
 				default:
 					break;
@@ -258,7 +273,14 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 			tableRow.setGravity(Gravity.CENTER);
 			for(line=0; line<x; line++){
 				button = new ImageButton(this); 
-				button.setBackgroundResource(R.drawable.mine_selector);
+
+				if(set.mSkin==1){
+					button.setBackgroundResource(R.drawable.mine_selector2);
+				}
+				else{
+					button.setBackgroundResource(R.drawable.mine_selector);
+				}
+
 				button.setImageResource(R.drawable.space);
 				button.setOnClickListener(this);
 				button.setOnLongClickListener(this);
@@ -706,6 +728,14 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		final AlertDialog dialog = new AlertDialog.Builder(this).create();
 		dialog.show();
 		dialog.getWindow().setContentView(R.layout.dialog_layout);
+		
+		//实例化广告条
+	    AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+	    //获取要嵌入广告条的布局
+	    LinearLayout adLayout=(LinearLayout)dialog.findViewById(R.id.ad_layout);
+	    //将广告条加入到布局中
+	    adLayout.addView(adView);
+		
 		Button okButton = (Button) dialog.findViewById(R.id.ok);
 		okButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -744,6 +774,13 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 
 		msgTextView.setText(message);
 
+		//实例化广告条
+	    AdView adView = new AdView(this, AdSize.SIZE_320x50);
+	    //获取要嵌入广告条的布局
+	    LinearLayout adLayout=(LinearLayout)dialog.findViewById(R.id.ad_layout);
+	    //将广告条加入到布局中
+	    adLayout.addView(adView);
+		
 		Button okButton = (Button) dialog.findViewById(R.id.ok);
 		okButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -780,9 +817,9 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	@SuppressWarnings("unchecked")
 	public void onMoreButtonClick(View view){
 		// 获取自定义广告列表
-		//DiyManager.showRecommendWall(this);
+		DiyManager.showRecommendWall(this);
 
-		adList = DiyManager.getAdList(this);
+		/*adList = DiyManager.getAdList(this);
 		if(adList!=null){
 			Intent i = new Intent();
 			i.setClass(this, DiySourceWallActivity.class);
@@ -790,7 +827,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		}else{
 			Toast.makeText(this, "加载数据失败，请尝试再次加载。", Toast.LENGTH_LONG).show();
 			DiyManager.initAdObjects(this);
-		}
+		}*/
 	}
 
 	public void onHistoryButtonClick(View view){

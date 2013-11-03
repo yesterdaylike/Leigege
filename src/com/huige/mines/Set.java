@@ -116,7 +116,7 @@ public class Set{
 
 	public int getSkin(){
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-		mSkin = settings.getInt(SKIN, 0);
+		mSkin = settings.getInt(SKIN, 1);
 		return mSkin;
 	}
 	
@@ -124,7 +124,7 @@ public class Set{
 		Editor editor  = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
 		editor.putInt(SKIN, skin);
 		editor.commit();
-		mDifficulty = skin;
+		mSkin = skin;
 	}
 
 	public void playSoundPool(int type){
