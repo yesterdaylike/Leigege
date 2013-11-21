@@ -46,14 +46,14 @@ public class DiySourceWallActivity extends Activity{
 		listView = (ListView) findViewById(R.id.recommendList);
 		backBtn = (ImageView) findViewById(R.id.backBtn);
 
-		list = DiyManager.getAdList(this);
+		//list = DiyManager.getAdList(this);
 
 		RecommendAdapter recommendAdapter = new RecommendAdapter(this, list);
 		listView.setAdapter(recommendAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				try {
-					DiyManager.downloadAd(DiySourceWallActivity.this, i);
+					//DiyManager.downloadAd(DiySourceWallActivity.this, i);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -61,7 +61,7 @@ public class DiySourceWallActivity extends Activity{
                 intent.putExtra("adId", i);
                 intent.setClass(DiySourceWallActivity.this, DiyAppDetailActivity.class);
                 startActivity(intent);*/
-				DiyManager.downloadAd(DiySourceWallActivity.this, list.get(i).getAdId());
+				//DiyManager.downloadAd(DiySourceWallActivity.this, list.get(i).getAdId());
 			}
 		});
 

@@ -60,7 +60,7 @@ public class DiyAppDetailActivity extends Activity {
         }
 
 
-        list = DiyManager.getAdList(this);
+        //list = DiyManager.getAdList(this);
         adObject = list.get(adId);
         appScreenShots = adObject.getScreenShortcuts();
 
@@ -92,7 +92,7 @@ public class DiyAppDetailActivity extends Activity {
 
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                DiyManager.downloadAd(context, adObject.getAdId());
+                //DiyManager.downloadAd(context, adObject.getAdId());
             }
         });
 

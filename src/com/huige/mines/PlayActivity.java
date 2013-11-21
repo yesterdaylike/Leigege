@@ -1,23 +1,26 @@
 package com.huige.mines;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
 
 import net.youmi.android.AdManager;
 import net.youmi.android.banner.AdSize;
 import net.youmi.android.banner.AdView;
-import net.youmi.android.diy.AdObject;
 import net.youmi.android.diy.DiyManager;
 import net.youmi.android.offers.OffersManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -63,7 +66,9 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	private Set set;
 	private DataBase database;
 
-	private List<AdObject> adList;
+	//private List<AdObject> adList;
+	private String[] mPhotos;
+	private Random mRandom;
 
 	private Handler handler = new Handler();
 	private Runnable runnable = new Runnable() {
@@ -81,10 +86,12 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_layout);
 
+		getContacts();
+		mRandom = new Random();
 		// 初始化应用的发布ID和密钥，以及设置测试模式
 		AdManager.getInstance(this).init("d72e9f61b58f5ee5","fb9dfc2456866caf", false);
 		// 预加载自定义数据列表
-		DiyManager.initAdObjects(this);
+		//DiyManager.initAdObjects(this);
 		set = new Set(this);
 		mSoundToggleButton = (ToggleButton)findViewById(R.id.SoundToggleButton);
 		mSoundToggleButton.setChecked(set.mOpenSound);
@@ -415,8 +422,14 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		default:
 			break;
 		}
-		if(resid>=0){
+		if(resid>0){
 			((ImageButton)mViews[line][row]).setImageResource(resid);
+		}
+		else{
+			Bitmap bitmap = getIconByPhotoId(mPhotos[mRandom.nextInt(mPhotos.length)]);
+			if( null != bitmap ){
+				mViews[line][row].setImageBitmap(bitmap);
+			}
 		}
 	}
 
@@ -852,5 +865,44 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 			super.onBackPressed();
 			OffersManager.getInstance(this).onAppExit(); 
 		}
+	}
+	
+	/**获得所有的联系人*/
+	private void getContacts(){
+		Cursor contactsCur = getContentResolver().query(
+				ContactsContract.Contacts.CONTENT_URI,  
+				new String[] {ContactsContract.Contacts.PHOTO_ID},  
+						null,
+						null,
+						ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+		if( null != contactsCur ){
+			mPhotos = new String[contactsCur.getCount()];
+			while (contactsCur.moveToNext()) {
+				Log.i("zhengwenhui", "Position:"+contactsCur.getPosition());
+				mPhotos[contactsCur.getPosition()] = contactsCur.getString(contactsCur.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
+			}
+			contactsCur.close();
+		}
+	}
+
+	/**根据photo id 获得联系人头像*/
+	@SuppressLint("NewApi")
+	private Bitmap getIconByPhotoId(String photoId){
+		byte[] contactIcon = null;
+		Bitmap map = null; 
+
+		String selection = ContactsContract.Data._ID + " = " + photoId;
+		Cursor cur = getContentResolver().query(
+				ContactsContract.Data.CONTENT_URI, 
+				new String[]{ContactsContract.Data.DATA15}, 
+				selection, 
+				null,
+				null);
+
+		if( null != cur && cur.moveToFirst() ){
+			contactIcon = cur.getBlob(0);
+			map = BitmapFactory.decodeByteArray(contactIcon, 0, contactIcon.length);
+		}
+		return map;
 	}
 }
